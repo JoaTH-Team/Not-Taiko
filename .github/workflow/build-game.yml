@@ -1,0 +1,22 @@
+name: Building The Game
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_windows:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: lix-pm/setup-lix@master
+      - uses: HaxeFlixel/setup-flixel@master
+        with:
+          haxe-version: stable
+          flixel-versions: release
+          target: cpp
+      - name: Build
+        run: haxelib run lime build cpp -final
