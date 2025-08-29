@@ -12,6 +12,16 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Restore Cache
+        id: cache-build-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            .haxelib/
+            export/release/windows/haxe/
+            export/release/windows/obj/
+          key: cache-windows
+
       - uses: lix-pm/setup-lix@master
       - uses: HaxeFlixel/setup-flixel@master
         with:
@@ -20,3 +30,17 @@ jobs:
           target: cpp
       - name: Build
         run: haxelib run lime build cpp -final
+      - name: Save Cache
+        id: cache-build-cache
+        uses: actions/cache@main
+        with:
+          path: |
+            .haxelib/
+            export/release/windows/haxe/
+            export/release/windows/obj/
+          key: cache-windows
+      - name: Upload Artifact
+        uses: actions/upload-artifact@main
+        with:
+          name: windowsBuild
+          path: export/release/windows/bin
