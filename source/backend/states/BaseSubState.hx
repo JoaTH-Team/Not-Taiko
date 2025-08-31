@@ -1,10 +1,10 @@
 package backend.states;
 
 import flixel.FlxG;
-import flixel.FlxState;
+import flixel.FlxSubState;
 import openfl.system.System;
 
-class BaseState extends FlxState
+class BaseSubState extends FlxSubState
 {
     var controls:Controls;
 
